@@ -123,7 +123,7 @@ static NSString * const cellID = @"cellID";
 {
     if (!_cancleBtn) {
         _cancleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _cancleBtn.frame = CGRectMake(0, 5, K_Width, 50);
+        _cancleBtn.frame = CGRectMake(0, 8, K_Width, 46);
         [_cancleBtn addTarget:self action:@selector(cancleClick) forControlEvents:UIControlEventTouchUpInside];
         [_cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
         [_cancleBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
@@ -145,7 +145,7 @@ static NSString * const cellID = @"cellID";
         self.frame = window.bounds;
         [window addSubview:self];
         self.alpha = 0.0f;
-        self.cwTbaleView.frame = CGRectMake(0, K_Height - (_titles.count + 1) * 50 - 5, K_Width, (_titles.count + 1) * 50 + 5);
+        self.cwTbaleView.frame = CGRectMake(0, K_Height - (_titles.count + 1) * 50 - 8, K_Width, (_titles.count + 1) * 50 + 8);
         
         [UIView animateWithDuration:0.25f animations:^{
             self.alpha = 1.0f;
