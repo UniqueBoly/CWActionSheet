@@ -35,7 +35,6 @@ static NSString * const cellID = @"cellID";
     return self;
 }
 
-
 - (void)commnInit
 {
     [self addSubview:self.cwTbaleView];
@@ -87,6 +86,7 @@ static NSString * const cellID = @"cellID";
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    self.frame = self.superview.bounds;
     self.cwTbaleView.frame = CGRectMake(0, K_Height - (_titles.count + 1) * 50 - 5, K_Width, (_titles.count + 1) * 50 + 5);
 }
 
@@ -141,30 +141,37 @@ static NSString * const cellID = @"cellID";
 {
     //在主线程中弹出，不然会被遮挡，导致看不到视图。
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-        self.frame = window.bounds;
-        [window addSubview:self];
         self.alpha = 0.0f;
-        self.cwTbaleView.frame = CGRectMake(0, K_Height - (_titles.count + 1) * 50 - 8, K_Width, (_titles.count + 1) * 50 + 8);
-        
-        [UIView animateWithDuration:0.25f animations:^{
-            self.alpha = 1.0f;
-        } completion:^(BOOL finished) {
-            
-        }];
-        
+        [[UIApplication sharedApplication].keyWindow addSubview:self];
+        [UIView animateWithDuration:0.35f
+                              delay:0.0
+             usingSpringWithDamping:0.9
+              initialSpringVelocity:0.7
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             self.alpha = 1.0;
+                             self.cwTbaleView.transform = CGAffineTransformMakeTranslation(0, -200);
+                         }
+                         completion:^(BOOL finished) {
+                             
+                         }];
     });
 }
 
 - (void)hide
 {
-    [UIView animateWithDuration:0.25f animations:^{
-        self.alpha = 0;
-        self.cwTbaleView.frame = CGRectMake(0, K_Height, K_Width, (_titles.count + 1) * 50 + 5);
-    } completion:^(BOOL finished) {
-        self.alpha = 1.0f;
-        [self removeFromSuperview];
-    }];
+    [UIView animateWithDuration:0.35f
+                          delay:0.0
+         usingSpringWithDamping:0.9
+          initialSpringVelocity:0.7
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.alpha = 0;
+                         self.cwTbaleView.frame = CGRectMake(0, K_Height, K_Width, (_titles.count + 1) * 50 + 5);
+                     } completion:^(BOOL finished) {
+                         self.alpha = 1.0f;
+                         [self removeFromSuperview];
+                     }];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -181,6 +188,5 @@ static NSString * const cellID = @"cellID";
         [self hide];
     }
 }
-
 
 @end
